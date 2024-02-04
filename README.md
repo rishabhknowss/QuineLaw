@@ -2,7 +2,7 @@
 
 A platform that provide AI based legal guidance after breaking a country's law 
 
-![QuineLAW](src/assets/Screenshot_20240204-234300~2.png)
+<img src="src/assets/Screenshot_20240204-234300~2.png" alt="QuineLAW" width="400" height="800">
 
 ## Installation 
 
