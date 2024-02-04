@@ -1,8 +1,8 @@
 # QuineLaw
 
-A platform that provide AI based legal guidance after breaking a country's law 
+A responsive platform that provide AI based legal guidance after breaking a country's law 
 
-<img src="src/assets/Screenshot_20240204-234300~2.png" alt="QuineLAW" width="400" height="800">
+![Screenshot from 2024-02-04 23-55-50](https://github.com/rishabhknowss/QuineLaw/assets/97790876/4b9ede98-6dac-402b-bbc6-e16dec5384e6)
 
 ## Installation 
 
@@ -15,8 +15,12 @@ Before you begin, ensure you have the following installed:
 ```bash
 git clone https://github.com/rishabhknowss/QuineLaw.git
 ```
+
 ```bash 
  npm install
  npm run dev
  ```
+### VIDEO TUTORIAL 
+
+https://github.com/rishabhknowss/QuineLaw/assets/97790876/d6dcb9c2-2130-4249-ae4a-ba2a1fef777a
 
