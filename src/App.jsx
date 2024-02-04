@@ -1,10 +1,18 @@
+// App.jsx
+
 import React, { useState } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import './App.css';
 
-// Separate Form component
+const NavBar = ({ onAddApiKey }) => (
+  <div className="navbar">
+    <h1>QuineLaw</h1>
+    <button onClick={onAddApiKey}>ADD API KEY</button>
+  </div>
+);
+
 const Form = ({ country, situation, onCountryChange, onSituationChange, onGenerateResponse, isLoading }) => (
-  <div>
-    <h1>AI Legal Guidance Assistant</h1>
+  <div className="container">
     <label>Select Country:</label>
     <select value={country} onChange={(e) => onCountryChange(e.target.value)}>
       <option value="">Select Country</option>
@@ -24,37 +32,38 @@ const Form = ({ country, situation, onCountryChange, onSituationChange, onGenera
     <button onClick={onGenerateResponse} disabled={isLoading}>
       Generate Response
     </button>
-    {isLoading && <p>Loading...</p>}
+    {isLoading && <p className="loading">Loading...</p>}
   </div>
 );
 
-// Separate Response component
 const Response = ({ response }) => (
-  <div>
+  <div className="container">
     <h2>AI Response:</h2>
     <ul>{response}</ul>
   </div>
 );
 
-// Main App component
 const App = () => {
+  const [apiKey, setApiKey] = useState('');
   const [situation, setSituation] = useState('');
   const [country, setCountry] = useState('');
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY) ;
+  const [showApiKeyInput, setShowApiKeyInput] = useState(false);
+  const genAI = new GoogleGenerativeAI(apiKey);
+  
 
   const handleGenerateResponse = async () => {
     try {
       setIsLoading(true);
 
       if (!genAI) {
-        console.error('invalid key');
+        console.error('Invalid key');
         return;
       }
 
       const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
-      const prompt = `You are a quick guidance for any law violation or government rule break for ${country} country , the information is just for education and awareness purpose and accessed by citizens. Provide (1) relevant rule or law mentioned in the ${country} government law/rule book, (2) Charges/fine/actions against the guilty according to the law, (3) Personal advice on what to do if found guilty and how to proceed further. The scenario is ${situation}`;
+      const prompt = `You are a quick guidance for any law violation or government rule break for ${country} country, the information is just for education and awareness purpose and accessed by citizens. Provide (1) relevant rule or law mentioned in the ${country} government law/rule book, (2) Charges/fine/actions against the guilty according to the law, (3) Personal advice on what to do if found guilty and how to proceed further. The scenario is ${situation}`;
 
       const result = await model.generateContent(prompt);
       const generatedResponse = await result.response.text();
@@ -70,8 +79,29 @@ const App = () => {
     }
   };
 
+  const handleSaveApiKey = () => {
+    setShowApiKeyInput(false);
+  };
+
+  const handleAddApiKey = () => {
+    setShowApiKeyInput(true);
+  };
+
+  const handleApiKeyChange = (event) => {
+    setApiKey(event.target.value);
+  };
+
   return (
     <div>
+      <NavBar onAddApiKey={handleAddApiKey} />
+      {showApiKeyInput && (
+        <div className="api-key-input container">
+          <label>Enter API Key:</label>
+          <input type="text" value={apiKey} onChange={handleApiKeyChange} />
+          <button onClick={handleSaveApiKey}>Save</button>
+          <button onClick={() => setShowApiKeyInput(false)}>Cancel</button>
+        </div>
+      )}
       <Form
         country={country}
         situation={situation}
