@@ -13,10 +13,10 @@ const NavBar = ({ onAddApiKey }) => (
 );
 
 const Form = ({ country, situation, onCountryChange, onSituationChange, onGenerateResponse, isLoading }) => (
-  <div className="container">
+  <div className="container" >
     <label>Select Country:</label>
     <select value={country} onChange={(e) => onCountryChange(e.target.value)}>
-      <option value="">Select Country</option>
+      <option value="" id='selectdefault'>Select Country</option>
       <option value="Africa">Africa</option>
       <option value="Brazil">Brazil</option>
       <option value="Bangladesh">Bangladesh</option>
@@ -122,7 +122,7 @@ const App = () => {
           <label>Enter API Key:</label>
           <input type="text" value={apiKey} onChange={handleApiKeyChange} />
           <button onClick={handleSaveApiKey}>Save</button>
-          <button onClick={() => setShowApiKeyInput(false)}>Cancel</button>
+          <button style ={{color : "white" , background : "red"}} onClick={() => setShowApiKeyInput(false)}>Cancel</button>
         </div>
       )}
       <Form
