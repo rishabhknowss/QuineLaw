@@ -22,16 +22,15 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
   
-.container {
+  .container {
     max-width: 800px;
     margin: 20px auto;
-    padding: 40px; /* Increase the padding for larger size */
+    padding: 20px;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px; /* Increase the border-radius for rounded corners */
+    border-radius: 5px;
   }
-    
-
+  
   h1, h2 {
     color: #333333;
   }
