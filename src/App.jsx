@@ -67,7 +67,7 @@ const Response = ({ response, isResponseAvailable }) => (
     <h2>AI Response:</h2>
     <ul><Markdown>{response}</Markdown></ul>
     {isResponseAvailable && (
-        <button onClick={handleDownload} className="download-button">
+        <button  className="download-button">
           Download as PDF
         </button>
       )}
