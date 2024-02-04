@@ -111,8 +111,7 @@ const App = () => {
 
   const handleDeveloperApiKey = () =>{
     setShowApiKeyInput(false);
-    setApiKey(import.meta.env.VITE_API_KEY)
-
+    setApiKey(process.env.VITE_API_KEY)
   }
 
   const handleSaveApiKey = () => {
