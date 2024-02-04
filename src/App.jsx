@@ -74,6 +74,9 @@ const Response = ({ response, isResponseAvailable }) => (
   </div>
 );
 
+const MadeBy = () => (
+  <div className='made-by'>Developed by Rishabh Rai<span role="img" aria-label="symbol">❤️</span></div>
+);
 const App = () => {
   const [apiKey, setApiKey] = useState('');
   const [situation, setSituation] = useState('');
@@ -147,6 +150,7 @@ const App = () => {
         isLoading={isLoading}
       />
       {response && <Response response={response} isResponseAvailable={isResponseAvailable} />}
+      <MadeBy></MadeBy>
     </div>
   );
 };

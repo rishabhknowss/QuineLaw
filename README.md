@@ -1,4 +1,0 @@
-# QuineLaw
-
-Ai legal guidance 
-
