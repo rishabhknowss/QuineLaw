@@ -6,8 +6,8 @@ import './App.css';
 
 const NavBar = ({ onAddApiKey }) => (
   <div className="navbar">
-    <h1>QuineLaw</h1>
-    <button onClick={onAddApiKey}>ADD API KEY</button>
+    <div><h1>Quine<span style={{color : 'green'}}>Law</span></h1></div>
+    <button onClick={onAddApiKey}>Add Api key</button>
   </div>
 );
 
@@ -16,8 +16,33 @@ const Form = ({ country, situation, onCountryChange, onSituationChange, onGenera
     <label>Select Country:</label>
     <select value={country} onChange={(e) => onCountryChange(e.target.value)}>
       <option value="">Select Country</option>
+      <option value="Africa">Africa</option>
+      <option value="Brazil">Brazil</option>
+      <option value="Bangladesh">Bangladesh</option>
+      <option value="China">China</option>
+      <option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
+      <option value="Europe">Europe</option>
+      <option value="France">France</option>
+      <option value="Germany">Germany</option>
       <option value="India">India</option>
-      <option value="USA">USA</option>
+      <option value="Japan">Japan</option>
+      <option value="Korea, North">Korea, North</option>
+      <option value="Liberia">Liberia</option>
+      <option value="Mexico">Mexico</option>
+      <option value="Nigeria">Nigeria</option>
+      <option value="Oman">Oman</option>
+      <option value="Pakistan">Pakistan</option>
+      <option value="Qatar">Qatar</option>
+      <option value="Russia">Russia</option>
+      <option value="Saudi Arabia">Saudi Arabia</option>
+      <option value="Turkey">Turkey</option>
+      <option value="United Kingdom">United Kingdom</option>
+      <option value="United States of America">United States of America</option>
+      <option value="Vietnam">Vietnam</option>
+      <option value="Yemen">Yemen</option>
+      <option value="Zambia">Zambia</option>
+      
+      
       {/* Add more countries as needed */}
     </select>
     <br />
