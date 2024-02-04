@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import './App.css';
+import Markdown from 'react-markdown'
 
 const NavBar = ({ onAddApiKey }) => (
   <div className="navbar">
@@ -64,7 +65,7 @@ const Form = ({ country, situation, onCountryChange, onSituationChange, onGenera
 const Response = ({ response }) => (
   <div className="container">
     <h2>AI Response:</h2>
-    <ul>{response}</ul>
+    <ul><Markdown>{response}</Markdown></ul>
   </div>
 );
 
@@ -88,15 +89,12 @@ const App = () => {
       }
 
       const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
-      const prompt = `You are a quick guidance for any law violation or government rule break for ${country} country, the information is just for education and awareness purpose and accessed by citizens. Provide (1) relevant rule or law mentioned in the ${country} government law/rule book, (2) Charges/fine/actions against the guilty according to the law, (3) Personal advice on what to do if found guilty and how to proceed further. The scenario is ${situation}`;
+      const prompt = `You are a quick guidance for any law violation or government rule break for ${country} country, the information is just for education and awareness purpose and accessed by citizens. Provide (1) relevant rule or law mentioned in the ${country} government law/rule book, (2) Charges/fine/actions against the guilty according to the law, (3) Personal advice on what to do if found guilty and how to proceed further. The scenario is ${situation}.`
 
       const result = await model.generateContent(prompt);
       const generatedResponse = await result.response.text();
 
-      // Format the response in points
-      const formattedResponse = generatedResponse.split('\n').map((point, index) => <li key={index}>{point}</li>);
-
-      setResponse(formattedResponse);
+      setResponse(generatedResponse);
     } catch (error) {
       console.error('Error generating content:', error);
     } finally {
