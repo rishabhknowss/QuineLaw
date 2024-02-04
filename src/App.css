@@ -55,7 +55,6 @@ body {
   select{
     font-weight: 500;
     color : green;
-    
   }
   button {
     font-family: 'Poppins', sans-serif;
@@ -63,10 +62,9 @@ body {
     color: white;
     padding: 10px 20px;
     border: none;
-    border-radius: 10px;
+    border-radius: 14px;
     cursor: pointer;
   }
-  
   button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
@@ -115,8 +113,9 @@ body {
     color: white;
     padding: 8px 16px;
     border: none;
-    border-radius: 10px;
+    border-radius: 14px;
     cursor: pointer;
+    transform: scale(1.1);
   }
   
   .api-key-input button:disabled {
@@ -124,10 +123,6 @@ body {
     cursor: not-allowed;
   }
 
-
-  /* Add or modify these styles in your CSS file (App.css or your preferred file) */
-
-/* Style for the input box */
 input {
     width: 100%;
     padding: 12px;
