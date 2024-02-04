@@ -62,10 +62,15 @@ const Form = ({ country, situation, onCountryChange, onSituationChange, onGenera
   </div>
 );
 
-const Response = ({ response }) => (
+const Response = ({ response, isResponseAvailable }) => (
   <div className="container">
     <h2>AI Response:</h2>
     <ul><Markdown>{response}</Markdown></ul>
+    {isResponseAvailable && (
+        <button onClick={handleDownload} className="download-button">
+          Download as PDF
+        </button>
+      )}
   </div>
 );
 
@@ -76,6 +81,7 @@ const App = () => {
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showApiKeyInput, setShowApiKeyInput] = useState(false);
+  const [isResponseAvailable, setIsResponseAvailable] = useState(false);
   const genAI = new GoogleGenerativeAI(apiKey);
   
 
@@ -95,6 +101,7 @@ const App = () => {
       const generatedResponse = await result.response.text();
 
       setResponse(generatedResponse);
+      setIsResponseAvailable(true);
     } catch (error) {
       console.error('Error generating content:', error);
     } finally {
@@ -133,7 +140,7 @@ const App = () => {
         onGenerateResponse={handleGenerateResponse}
         isLoading={isLoading}
       />
-      {response && <Response response={response} />}
+      {response && <Response response={response} isResponseAvailable={isResponseAvailable} />}
     </div>
   );
 };
