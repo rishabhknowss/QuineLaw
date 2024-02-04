@@ -111,7 +111,8 @@ const App = () => {
 
   const handleDeveloperApiKey = () =>{
     setShowApiKeyInput(false);
-    setApiKey(process.env.VITE_API_KEY)
+    // demo purpose
+    setApiKey('AIzaSyBYeAX0KJ03Rv-v0G28LPbU8HnWFK5BP6k')
   }
 
   const handleSaveApiKey = () => {
