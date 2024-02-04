@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import './App.css';
 import Markdown from 'react-markdown'
+import html2pdf from 'html2pdf.js';
+
 
 const NavBar = ({ onAddApiKey }) => (
   <div className="navbar">
@@ -62,12 +64,55 @@ const Form = ({ country, situation, onCountryChange, onSituationChange, onGenera
   </div>
 );
 
-const Response = ({ response }) => (
-  <div className="container">
-    <h2>AI Response:</h2>
-    <ul><Markdown>{response}</Markdown></ul>
-  </div>
-);
+const Response = ({ response, isResponseAvailable }) => {
+  const handleDownload = async () => {
+    try {
+      const pdfOptions = {
+        margin: 10,
+        filename: 'AI_Response.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      };
+
+      // Create a div to hold the AI response content
+      const responseDiv = document.createElement('div');
+      responseDiv.innerHTML = `
+        <h2>AI Response:</h2>
+        <ul>${response}</ul>
+      `;
+
+      // Generate PDF with the response content
+      const pdf = await html2pdf().from(responseDiv).set(pdfOptions).outputPdf();
+
+      // Create a Blob from the PDF content
+      const pdfBlob = new Blob([pdf], { type: 'application/pdf' });
+
+      // Create a download link and trigger the download
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(pdfBlob);
+      link.download = pdfOptions.filename;
+      link.click();
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
+
+  return (
+    <div className="container">
+      <h2>AI Response:</h2>
+      <ul>
+        <Markdown>{response}</Markdown>
+      </ul>
+      {isResponseAvailable && (
+        <button onClick={handleDownload} className="download-button">
+          Download as PDF
+        </button>
+      )}
+    </div>
+  );
+};
+
 
 const App = () => {
   const [apiKey, setApiKey] = useState('');
@@ -76,6 +121,8 @@ const App = () => {
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showApiKeyInput, setShowApiKeyInput] = useState(false);
+  const [isResponseAvailable, setIsResponseAvailable] = useState(false);
+
   const genAI = new GoogleGenerativeAI(apiKey);
   
 
@@ -95,6 +142,7 @@ const App = () => {
       const generatedResponse = await result.response.text();
 
       setResponse(generatedResponse);
+      setIsResponseAvailable(true);
     } catch (error) {
       console.error('Error generating content:', error);
     } finally {
@@ -133,7 +181,8 @@ const App = () => {
         onGenerateResponse={handleGenerateResponse}
         isLoading={isLoading}
       />
-      {response && <Response response={response} />}
+      
+      {response && <Response response={response} isResponseAvailable={isResponseAvailable} />}
     </div>
   );
 };
