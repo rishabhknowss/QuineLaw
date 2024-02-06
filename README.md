@@ -8,7 +8,8 @@ A platform that provide AI based legal guidance after breaking a country's law
 
 ### Prerequisites
 
-Node.js version >= 18.13.0
+- Node.js version >= 18.13.0
+- Google gemini pro api key
 
 
 ### Clonning
