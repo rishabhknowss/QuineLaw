@@ -1,9 +1,9 @@
-// App.jsx
-
 import React, { useState } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import './App.css';
 import Markdown from 'react-markdown'
+import jsPDF from 'jspdf';
+
 
 const NavBar = ({ onAddApiKey }) => (
   <div className="navbar">
@@ -67,7 +67,11 @@ const Response = ({ response, isResponseAvailable }) => (
     <h2>QuineLaw says:</h2>
     <ul><Markdown>{response}</Markdown></ul>
     {isResponseAvailable && (
-        <button  className="download-button">
+        <button  className="download-button" onClick={()=>{ {
+          const pdf = new jsPDF();
+          pdf.text(response, 10, 10); 
+          pdf.save('QuineLaw.pdf');
+        }}}>
           Download as PDF
         </button>
       )}
@@ -129,6 +133,7 @@ const App = () => {
   const handleApiKeyChange = (event) => {
     setApiKey(event.target.value);
   };
+
 
   return (
     <div>
