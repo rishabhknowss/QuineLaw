@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import './App.css';
 import Markdown from 'react-markdown'
-import jsPDF from 'jspdf';
+import html2pdf from 'html2pdf.js';
+
 
 
 const NavBar = ({ onAddApiKey }) => (
   <div className="navbar">
     <div><h1>Quine<span style={{color : 'green'}}>Law</span></h1></div>
-    <button onClick={onAddApiKey}>Add Api key</button>
+    <button className='button-85' onClick={onAddApiKey}>Add Api key</button>
   </div>
 );
 
@@ -62,21 +63,32 @@ const Form = ({ country, situation, onCountryChange, onSituationChange, onGenera
   </div>
 );
 
-const Response = ({ response, isResponseAvailable }) => (
-  <div className="container">
-    <h2>QuineLaw says:</h2>
-    <ul><Markdown>{response}</Markdown></ul>
-    {isResponseAvailable && (
-        <button  className="download-button" onClick={()=>{ {
-          const pdf = new jsPDF();
-          pdf.text(response, 10, 10); 
-          pdf.save('QuineLaw.pdf');
-        }}}>
-          Download as PDF
+const Response = ({ response, isResponseAvailable }) => {
+  const [pdfGenerating, setPdfGenerating] = useState(false);
+
+  const generatePDF = () => {
+    setPdfGenerating(true);
+
+    const element = document.createElement("div");
+    element.innerHTML = response;
+
+    html2pdf().from(element).save('QuineLaw.pdf').then(() => {
+      setPdfGenerating(false);
+    });
+  };
+
+  return (
+    <div className="container">
+      <h2>QuineLaw says:</h2>
+      <ul><Markdown>{response}</Markdown></ul>
+      {isResponseAvailable && (
+        <button className="download-button" onClick={generatePDF} disabled={pdfGenerating}>
+          {pdfGenerating ? "Generating PDF..." : "Download as PDF"}
         </button>
       )}
-  </div>
-);
+    </div>
+  );
+};
 
 const MadeBy = () => (
   <div className='made-by'>Developed by Rishabh Rai<span role="img" aria-label="symbol">❤️</span></div>
@@ -111,6 +123,7 @@ const App = () => {
       setIsResponseAvailable(true);
     } catch (error) {
       console.error('Error generating content:', error);
+      alert("Check API Key or Try different prompts (for example : start with What if a person.....)")
     } finally {
       setIsLoading(false);
     }
