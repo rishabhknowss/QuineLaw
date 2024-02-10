@@ -9,7 +9,7 @@ import html2pdf from 'html2pdf.js';
 const NavBar = ({ onAddApiKey }) => (
   <div className="navbar">
     <div><h1>Quine<span style={{color : 'green'}}>Law</span></h1></div>
-    <button className='button-85' onClick={onAddApiKey}>Add Api key</button>
+    <button className='button-85' onClick={onAddApiKey}>Gemini key</button>
   </div>
 );
 
