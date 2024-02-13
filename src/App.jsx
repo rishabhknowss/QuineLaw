@@ -94,7 +94,8 @@ const MadeBy = () => (
   <div className='made-by'>Developed by Rishabh Rai<span role="img" aria-label="symbol">❤️</span></div>
 );
 const App = () => {
-  const [apiKey, setApiKey] = useState('');
+  const apiKeyDefault = import.meta.env.VITE_API_KEY
+  const [apiKey, setApiKey] = useState(apiKeyDefault);
   const [situation, setSituation] = useState('');
   const [country, setCountry] = useState('');
   const [response, setResponse] = useState('');
@@ -129,11 +130,7 @@ const App = () => {
     }
   };
 
-  const handleDeveloperApiKey = () =>{
-    setShowApiKeyInput(false);
-    // demo purpose
-    setApiKey('AIzaSyBYeAX0KJ03Rv-v0G28LPbU8HnWFK5BP6k')
-  }
+ 
 
   const handleSaveApiKey = () => {
     setShowApiKeyInput(false);
@@ -144,7 +141,14 @@ const App = () => {
   };
 
   const handleApiKeyChange = (event) => {
-    setApiKey(event.target.value);
+    const inputApiKey = event.target.value.trim();
+
+    if (inputApiKey === apiKeyDefault) {
+      // If the input is the default key, don't update the state
+      return;
+    }
+
+    setApiKey(inputApiKey || apiKeyDefault); // Set the default API key if user input is empty
   };
 
 
@@ -154,9 +158,8 @@ const App = () => {
       {showApiKeyInput && (
         <div className="api-key-input container">
           <label>Enter API Key:</label>
-          <input type="text" value={apiKey} onChange={handleApiKeyChange} />
+          <input type="text" placeholder='Leave it empty to use the default API key' value={apiKey === apiKeyDefault ? '' : apiKey} onChange={handleApiKeyChange} />
           <button onClick={handleSaveApiKey}>Save</button>
-          <button style={{margin : 20 }} onClick={handleDeveloperApiKey}>Use Developer's Api :( </button>
         </div>
       )}
       <Form
