@@ -1,3 +1,4 @@
+import { inject } from '@vercel/analytics';
 import React, { useState } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import './App.css';
@@ -175,5 +176,6 @@ const App = () => {
     </div>
   );
 };
+inject();
 
 export default App;
