@@ -92,7 +92,7 @@ const Response = ({ response, isResponseAvailable }) => {
 };
 
 const MadeBy = () => (
-  <div className='made-by'>Developed by Rishabh Rai<span role="img" aria-label="symbol">❤️</span></div>
+  <div className='made-by'>Developed by Rishabh Rai<span role="img" aria-label="symbol">🐶</span></div>
 );
 const App = () => {
   const apiKeyDefault = import.meta.env.VITE_API_KEY
