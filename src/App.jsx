@@ -1,5 +1,5 @@
 import { inject } from '@vercel/analytics';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import './App.css';
 import Markdown from 'react-markdown'
@@ -66,22 +66,33 @@ const Form = ({ country, situation, onCountryChange, onSituationChange, onGenera
 
 const Response = ({ response, isResponseAvailable }) => {
   const [pdfGenerating, setPdfGenerating] = useState(false);
+  const pdfResponse = useRef();
 
   const generatePDF = () => {
     setPdfGenerating(true);
 
-    const element = document.createElement("div");
-    element.innerHTML = response;
+    const opt = {
+      margin:       1,
+      image:        { type: 'jpeg', quality: 1 },
+      html2canvas:  { scale: 3 },
+      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
+      pagebreak:    { mode: ['avoid-all']}
+    };
 
-    html2pdf().from(element).save('QuineLaw.pdf').then(() => {
+    const element = document.createElement("div");
+    element.innerHTML = pdfResponse.current.innerHTML;
+
+    html2pdf().set(opt).from(element).save('QuineLaw.pdf').then(() => {
       setPdfGenerating(false);
     });
   };
 
   return (
     <div className="container">
-      <h2>QuineLaw says:</h2>
-      <ul><Markdown>{response}</Markdown></ul>
+      <div ref={pdfResponse}>
+        <h2>QuineLaw says:</h2>
+        <ul><Markdown>{response}</Markdown></ul>
+      </div>
       {isResponseAvailable && (
         <button className="download-button" onClick={generatePDF} disabled={pdfGenerating}>
           {pdfGenerating ? "Generating PDF..." : "Download as PDF"}
