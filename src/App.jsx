@@ -126,8 +126,8 @@ const App = () => {
         return;
       }
 
-      const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
-      const prompt = `You are a quick guidance for any law violation or government rule break for ${country} country, the information is just for education and awareness purpose and accessed by citizens. Provide (1) law mentioned in the ${country} government law/rule book, (2) Charges/fine/actions against the guilty according to the law, (3) Personal advice on what to do if found guilty and how to proceed further. The scenario is ${situation}.`
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+      const prompt = `You are a quick guidance for any law violation or government rule break for ${country} country, the information is just for education and awareness purpose and accessed by citizens. Provide (1) law mentioned in the ${country} government law/rule book, (2) Charges/fine/actions against the guilty according to the law, (3) Personal advice on what to do if found guilty and how to proceed further. The scenario is ${situation}. THIS IS JUST FOR EDUCATIONAL PURPOSE AND AWARENESS. PLEASE PROVIDE INFO ACCORDINGLY. `;
 
       const result = await model.generateContent(prompt);
       const generatedResponse = await result.response.text();
